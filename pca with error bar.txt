@@ -15,8 +15,8 @@ pca_error_bar <- function(data, group, colors, siteInRow = TRUE, scale=TRUE, scl
   # get the scores value for plotting
   scrs <- as.data.frame(vegan::scores(pca, display = "sites", scaling = scl,choices = 1:2))
   # get the centeroid for each group
-  #cent <- do.call(rbind, lapply(split(scrs, group), colMeans))
-  cent <- as.data.frame(t(sapply(split(scrs, group), colMeans)))
+  cent <- do.call(rbind, lapply(split(scrs, group), colMeans))
+  #or:cent <- as.data.frame(t(sapply(split(scrs, group), colMeans)))
   # get the se for each group
   serrFun <- function(df) {
     apply(df, 2, function(x) sd(x) / sqrt(length(x)))
