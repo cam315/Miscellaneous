@@ -11,7 +11,7 @@ pca_error_bar <- function(data, group, colors, siteInRow = TRUE, scale=TRUE, scl
   }  
   message('Please specify if site names in rows and species in column')
   if(!siteInRow) {data = as.data.frame(t(data))} #transpose data if sites are not in rows
-  pca <- vegan::rda(data, scale = TRUE)
+  pca <- vegan::rda(data, scale = scale)
   # get the scores value for plotting
   scrs <- as.data.frame(vegan::scores(pca, display = "sites", scaling = scl,choices = 1:2))
   # get the centeroid for each group
