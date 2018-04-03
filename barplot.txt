@@ -1,0 +1,41 @@
+# -------------------------------------------------
+# barplot with data labels and custom x axis labels
+# Sizhong Yang, August 15, 2015
+# -------------------------------------------------
+
+
+bplot <- function(data, srt = 45, yoff = 0.05, dataoff = 0.025, barcol='grey', main='Custom barplot', ylab ='Values', grid = TRUE, ...){
+  if (!is.vector(data)) stop('Input data must be a vector for barplot')
+  a = barplot(height=data, space=0.75, ylim = range(0, 1.1*max(data)),width = 0.80,axes=F,xaxt='n',col=barcol)
+  if(grid)  grid(nx = NA,ny = NULL) # NA means not draw, NULL is default.
+  # add x and y axes labels
+  axis(2, labels=T, cex.axis = 1.0, las=1)
+  if(!is.null(names(data))){
+  axis(1, labels=F, at = a)
+  text(x = a, y = par("usr")[3] - yoff*max(data), labels= names(data), srt = srt,
+	xpd = TRUE, adj = c(1,0.5),cex = 1.0, font= 3)
+  # srt specify the rotation of x axis labels, which is useful if the labels contains long characters
+  }
+  # add data label above each bar
+  text(x = a, y = data + dataoff*max(data), labels = data, cex = 0.8)
+  # add title, axis labels
+  title(main = main,ylab = 'Values',cex.lab = 1.4,col.lab = 'black',col.sub='blue')
+  # add box frame
+  box()
+}
+
+
+## Example
+
+x <- 1:10
+names(x)=LETTERS[1:10]
+color <- rainbow(n=length(x))
+
+bplot(x,barcol=color)
+
+## 
+
+y <- matrix(round(runif(100,10,50),1),10, 5)
+bplot(y, barcol=color)
+bplot(y[,1],barcol = color, ylab='Example Y',xlab='Example X')
+bplot(y[1,],main ='Test plot')
