@@ -1,7 +1,7 @@
 ##--------------------------------------------------------------
 ## Extract ACC and Speices name from headline of ls_orchid.fasta 
 ## by using regular expression
-## Sizhong, 2013-1-10
+## Sizhong, 2013-1-10, Potsdam
 ##--------------------------------------------------------------
 
 # input fasta file
