@@ -49,8 +49,8 @@ df = matrix(rnorm(25), 5);
 colnames(df) <- rownames(df) <- letters[1:5] 
 p <- dist(df)
 
-result = convert(p)
-result
+test = convert(p)
+test
 
 # for large distance matrix, 'fastConvert' is recommended
 
@@ -59,12 +59,12 @@ colnames(df) <- rownames(df) <- paste0('s',seq(1,100))
 p <- dist(df)
 
 ptm <- proc.time()
-result = convert(p)
-head(result)
+test = convert(p)
+head(test)
 proc.time() - ptm
 
 ptm <- proc.time()
-result = fastConvert(p)
-head(result)
+test = fastConvert(p)
+head(test)
 proc.time() - ptm
 
