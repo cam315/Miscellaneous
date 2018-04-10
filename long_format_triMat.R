@@ -1,11 +1,11 @@
 ## convert lower triangular matrix to long format data frame with 3 columns
 ## Sizhong Yang, 2013-3-18, Potsdam
 
-convert <- function(input, colname=c("sp1","sp2","dist"), digs =4,...){
+convert <- function(triMatrix, colname=c("sp1","sp2","dist"), digs =4,...){
     # digs specifies the number of decimal places
-    if(!is.matrix(input) | !is.data.frame(input)) input = as.matrix(input)
+    if(!is.matrix(triMatrix) | !is.data.frame(triMatrix)) triMatrix = as.matrix(triMatrix)
     x <- data.frame(matrix(data=NA,ncol=3,byrow=T))
-    name <- rownames(input)
+    name <- rownames(triMatrix)
     #name <- gsub(" ", "",name)
     n <- length(name)
     q = 1
@@ -13,7 +13,7 @@ convert <- function(input, colname=c("sp1","sp2","dist"), digs =4,...){
         for (j in (1:i-1)){
             spa <- name[i]  
             spb <- name[j] 
-            value <- round(input[i,j], digits = digs)
+            value <- round(triMatrix[i,j], digits = digs)
             x[q,1:3] <- c(spa,spb,value)
             q = q+1
          }
