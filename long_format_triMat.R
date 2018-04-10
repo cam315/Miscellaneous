@@ -22,13 +22,49 @@ convert <- function(triMatrix, colname=c("sp1","sp2","dist"), digs =4,...){
      }
    x <- x[x[,1] != x[,2], ] #remove self-correlated rows
    x[with(x, order(sp1, sp2)), ] # order the data frame
+   invisible(x)
  }
 
+# for very large distrance matrix, the function below is more efficient
 
-# use the function
+fastConvert <- function(dist,colname=c("sp1","sp2","dist"),...){
+  if(!require("reshape2")){ 
+    install.packages("reshape2")
+    library(reshape2)
+  }  
+  m <- as.matrix(dist)
+  m2 <- melt(m)[melt(upper.tri(m))$value,]
+  names(m2) <- colname
+  invisible (m2)
+}
+
+
+# ----------
+# Examples
+# ----------
+
+# For small distrance matrix
 
 df = matrix(rnorm(25), 5); 
 colnames(df) <- rownames(df) <- letters[1:5] 
 p <- dist(df)
 
-convert(p)
+result = convert(p)
+result
+
+# for large distance matrix, 'fastConvert' is recommended
+
+df = matrix(rnorm(10000), 100)
+colnames(df) <- rownames(df) <- paste0('s',seq(1,100)) 
+p <- dist(df)
+
+ptm <- proc.time()
+result = convert(p)
+head(result)
+proc.time() - ptm
+
+ptm <- proc.time()
+result = fastConvert(p)
+head(result)
+proc.time() - ptm
+
