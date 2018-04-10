@@ -1,10 +1,10 @@
 ## convert lower triangular matrix to long format data frame with 3 columns
 ## Sizhong Yang, 2013-3-18, Potsdam
 
-convert <- function(triMatrix, colname=c("sp1","sp2","dist"), digs =4,...){
+convert <- function(triMatrix, colname = c("sp1","sp2","dist"), digs = 4,...){
     # digs specifies the number of decimal places
     if(!is.matrix(triMatrix) | !is.data.frame(triMatrix)) triMatrix = as.matrix(triMatrix)
-    x <- data.frame(matrix(data=NA,ncol=3,byrow=T))
+    x <- data.frame(matrix(data = NA,ncol = 3,byrow = T))
     name <- rownames(triMatrix)
     #name <- gsub(" ", "",name)
     n <- length(name)
@@ -27,15 +27,15 @@ convert <- function(triMatrix, colname=c("sp1","sp2","dist"), digs =4,...){
 
 # for very large distrance matrix, the function below is more efficient
 
-fastConvert <- function(dist,colname=c("sp1","sp2","dist"),...){
+fastConvert <- function(triMatrix,colname = c("sp1","sp2","dist"),...){
   if(!require("reshape2")){ 
     install.packages("reshape2")
     library(reshape2)
   }  
-  m <- as.matrix(dist)
+  m <- as.matrix(triMatrix)
   m2 <- melt(m)[melt(upper.tri(m))$value,]
   names(m2) <- colname
-  invisible (m2)
+  invisible(m2)
 }
 
 
@@ -49,7 +49,7 @@ df = matrix(rnorm(25), 5);
 colnames(df) <- rownames(df) <- letters[1:5] 
 p <- dist(df)
 
-test = convert(p)
+test = convert(triMatrix = p)
 test
 
 # for large distance matrix, 'fastConvert' is recommended
@@ -59,12 +59,12 @@ colnames(df) <- rownames(df) <- paste0('s',seq(1,100))
 p <- dist(df)
 
 ptm <- proc.time()
-test = convert(p)
+test = convert(triMatrix = p)
 head(test)
 proc.time() - ptm
 
 ptm <- proc.time()
-test = fastConvert(p)
+test = fastConvert(triMatrix = p)
 head(test)
 proc.time() - ptm
 
