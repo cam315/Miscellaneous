@@ -22,7 +22,7 @@ per$CAZy = df$CAZy
 
 per$CAZyFamily = gsub('\\d+', '', per$CAZy)
 
-## Step3, convert to long format
+## Step3, convert to long format using melt function of package reshape2
 
 per.m = melt(per, id.vars = c('CAZy', 'CAZyFamily'), variable.name = 'Samples', value.name = "Relabund")
 dim(per.m)
