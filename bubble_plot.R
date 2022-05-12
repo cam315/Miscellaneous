@@ -20,11 +20,11 @@ per = sweep(df[,-1], 2, colSums(df[,-1]),"/")*100
 
 per$CAZy = df$CAZy
 
-per$CAZyFamily = gsub('\\d+', '', per$CAZy)
+per$CAZyModule = gsub('\\d+', '', per$CAZy)
 
 ## Step3, convert to long format using melt function of package reshape2
 
-per.m = melt(per, id.vars = c('CAZy', 'CAZyFamily'), variable.name = 'Samples', value.name = "Relabund")
+per.m = melt(per, id.vars = c('CAZy', 'CAZyModule'), variable.name = 'Samples', value.name = "Relabund")
 dim(per.m)
 head(per.m)
 
@@ -55,13 +55,13 @@ p2 = ggplot(data = per.m, aes(x = Samples, y = CAZy, size = Relabund, fill=CAZy)
 		legend.text = element_text(size=12, face="bold")) + 
 	scale_size(range = c(0.5, 20), breaks = c(0.5,1.5,10,25,50,65))+
 	guides(fill = 'none') +
-	guides(size=guide_legend("Relative\nAbundance\n(%)"))
+	guides(size = guide_legend("Relative\nAbundance\n(%)"))
 
 print(p2)
 
-## facet by CAZyFamily
+## facet by CAZyModule
 
-p2 + facet_grid(CAZyFamily~., scales = 'free',space = "free") + 
+p2 + facet_grid(CAZyModule ~ ., scales = 'free',space = "free") + 
 	theme(strip.text = element_text(colour="black", size=16, face="bold"))
 
 ## save plot to a vector plot, here we use pdf devices
